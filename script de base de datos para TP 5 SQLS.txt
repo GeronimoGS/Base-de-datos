@@ -1,0 +1,311 @@
+
+Create database TP5
+
+use TP5
+
+SET DATEFORMAT dmy
+
+CREATE TABLE [empleado] (
+	[cod_empleado] [int] IDENTITY (1, 1) NOT NULL ,
+	[nombre] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL ,
+	[apellido] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL ,
+	[cod_departamento] [int] not null ,
+	[suelod_basico] [money]  NOT NULL ,
+	[fecha_ingreso] [datetime] NULL ,
+	[fecha_nacimiento] [datetime] NULL ,
+	[jefe] [int]  NULL ,
+) ON [PRIMARY]
+GO
+
+
+
+CREATE TABLE [articulo] (
+	[cod_articulo] [int] IDENTITY (1, 1) NOT NULL ,
+	[descripcion] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL ,
+	[tipo_articulo] [char] (1) COLLATE Traditional_Spanish_CI_AS NULL ,
+	[precio] [money] NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [articulo_deposito] (
+	[cod_articulo] [int] NULL ,
+	[cod_deposito] [int] NULL ,
+	[stock_actual] [int] NULL ,
+	[punto_reorden] [int] NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [cliente] (
+	[cod_cliente] [int] IDENTITY (1, 1) NOT NULL ,
+	[razon_social] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL ,
+	[direccion] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [departamento] (
+	[cod_departamento] [int] IDENTITY (1, 1) NOT NULL ,
+	[descripcion] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL ,
+	[gerente] [int] NULL ,
+	[cod_dep_padre] [int] NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [deposito] (
+	[cod_deposito] [int] IDENTITY (1, 1) NOT NULL ,
+	[ubicacion_deposito] [varchar] (50) COLLATE Traditional_Spanish_CI_AS NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [detalle_de_pedido] (
+	[nro_pedido] [int] NULL ,
+	[cod_articulo] [int] NULL ,
+	[cantidad] [char] (10) COLLATE Traditional_Spanish_CI_AS NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [pedido] (
+	[nro_pedido] [int] IDENTITY (1, 1) NOT NULL ,
+	[cod_cliente] [int] NULL ,
+	[cod_empleado] [int] NULL ,
+	[fecha_pactada_entrega] [datetime] NULL ,
+	[fecha_real_entrega] [datetime] NULL ,
+	[deposito_entrega] [int] NULL 
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
+insert into empleado values('Andres','Paez',1,1200,'01-01-1998','20-05-1960',null)
+insert into empleado values('Mariana','Renado',1,1100,'01-02-2000','20-05-1960',1)
+insert into empleado values('Ariel','Linares',1,1100,'01-11-2001','28-05-1970',1)
+insert into empleado values('Florencia','Linares',2,1050,'01-09-2002','12-03-1971',2)
+insert into empleado values('Esteban','Baez',2,1050,'01-07-2002','10-06-1980',2)
+insert into empleado values('Fernando','Diciana',2,1100,'01-05-2005','02-07-1981',3)
+
+
+insert into cliente values('Electricidad Suipacha','Lamadrid 123')
+insert into cliente values('El Foquito','Independencia 1234')
+insert into cliente values('La Candela','San Juan 3456')
+insert into cliente values('Distribuidora Argentina','Larrea 1234')
+insert into cliente values('Darluz','La Rioja 4321')
+insert into cliente values('Electrolux','Lima 123')
+
+
+
+
+
+insert into deposito values('Aeroparque')
+insert into deposito values('Avellaneda')
+insert into deposito values('Quilmes')
+
+
+insert into departamento values('Administracion',1,null)
+insert into departamento values('Ventas',2,1)
+
+
+
+
+insert into articulo values('Lampara 25W','A',1.20)
+insert into articulo values('Lampara 40W','A',1.40)
+insert into articulo values('Lampara 60W','A',1.60)
+insert into articulo values('Lampara 75W','A',1.80)
+insert into articulo values('Lampara 100W','A',2.20)
+
+insert into articulo values('Modulo 1 punto','B',1.50)
+insert into articulo values('Modulo 1 punto y toma','B',3.50)
+insert into articulo values('Modulo 1 toma','B',2.50)
+insert into articulo values('Modulo 1 toma c neutro','B',2.50)
+insert into articulo values('Modulo 1 punto y toma c neutro','B',3.50)
+
+insert into articulo values('Portalamparas con chicote','C',1.80)
+insert into articulo values('Portalamparas con cadena','C',7.80)
+insert into articulo values('Portalamparas bronce con arandela porc','C',3.80)
+insert into articulo values('Portalamparas porcelana','C',2.80)
+insert into articulo values('Portalamparas baquelita negro','C',2.50)
+insert into articulo values('Portalamparas baquelita blanco','C',3.00)
+
+
+
+insert into articulo_deposito values(1,1,45,50)
+insert into articulo_deposito values(2,1,60,50)
+insert into articulo_deposito values(3,1,55,50)
+insert into articulo_deposito values(4,1,35,50)
+insert into articulo_deposito values(5,1,78,50)
+insert into articulo_deposito values(6,1,23,100)
+insert into articulo_deposito values(7,1,56,100)
+insert into articulo_deposito values(8,1,80,100)
+insert into articulo_deposito values(9,1,78,100)
+insert into articulo_deposito values(10,1,65,100)
+insert into articulo_deposito values(11,1,12,50)
+insert into articulo_deposito values(12,1,45,50)
+insert into articulo_deposito values(13,1,100,50)
+insert into articulo_deposito values(14,1,90,50)
+insert into articulo_deposito values(15,1,100,50)
+insert into articulo_deposito values(16,1,100,50)
+
+
+insert into articulo_deposito values(1,2,0,50)
+insert into articulo_deposito values(2,2,60,50)
+insert into articulo_deposito values(3,2,34,50)
+insert into articulo_deposito values(4,2,80,50)
+insert into articulo_deposito values(5,2,8,50)
+insert into articulo_deposito values(6,2,23,100)
+insert into articulo_deposito values(7,2,68,100)
+insert into articulo_deposito values(8,2,125,100)
+insert into articulo_deposito values(9,2,60,100)
+insert into articulo_deposito values(10,2,65,100)
+insert into articulo_deposito values(11,2,19,50)
+insert into articulo_deposito values(12,2,65,50)
+insert into articulo_deposito values(13,2,100,50)
+insert into articulo_deposito values(14,2,80,50)
+insert into articulo_deposito values(15,2,100,50)
+insert into articulo_deposito values(16,2,0,50)
+
+
+insert into articulo_deposito values(1,3,10,50)
+insert into articulo_deposito values(2,3,0,50)
+insert into articulo_deposito values(3,3,4,50)
+insert into articulo_deposito values(4,3,8,50)
+insert into articulo_deposito values(5,3,18,50)
+insert into articulo_deposito values(6,3,29,100)
+insert into articulo_deposito values(7,3,68,100)
+insert into articulo_deposito values(8,3,0,100)
+insert into articulo_deposito values(9,3,0,100)
+insert into articulo_deposito values(10,3,65,100)
+insert into articulo_deposito values(11,3,19,50)
+insert into articulo_deposito values(12,3,65,50)
+insert into articulo_deposito values(13,3,10,50)
+insert into articulo_deposito values(14,3,8,50)
+insert into articulo_deposito values(15,3,10,50)
+insert into articulo_deposito values(16,3,0,50)
+
+
+
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(1,1,'20-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(1,1,'20-06-2008','20-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(1,1,'22-06-2008','22-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(1,2,'23-06-2008','24-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(1,2,'27-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(1,3,'10-07-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(1,3,'20-07-2008',1)
+
+
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(2,5,'20-05-2008','20-05-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(2,5,'22-05-2008','24-05-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(2,5,'23-05-2008','30-05-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(2,5,'10-06-2008','14-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(2,2,'28-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(2,3,'14-07-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(2,3,'21-07-2008',1)
+
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(3,5,'18-05-2008','20-05-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(3,5,'22-05-2008','24-05-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(3,5,'01-06-2008','03-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(3,4,'10-06-2008','14-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(3,2,'09-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(3,1,'14-07-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(3,1,'14-07-2008',1)
+
+
+
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(4,6,'18-06-2008','18-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(4,6,'22-06-2008','22-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(5,6,'01-06-2008','01-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,fecha_real_entrega,deposito_entrega) values(5,6,'10-06-2008','15-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(6,5,'09-06-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(6,5,'14-07-2008',1)
+insert into pedido(cod_cliente,cod_empleado,fecha_pactada_entrega,deposito_entrega) values(6,5,'14-07-2008',1)
+
+
+
+insert into detalle_de_pedido values(1,1,10)
+insert into detalle_de_pedido values(1,2,10)
+insert into detalle_de_pedido values(1,3,10)
+insert into detalle_de_pedido values(1,4,3)
+insert into detalle_de_pedido values(2,1,15)
+insert into detalle_de_pedido values(2,3,20)
+insert into detalle_de_pedido values(2,5,40)
+insert into detalle_de_pedido values(3,2,15)
+insert into detalle_de_pedido values(3,3,16)
+insert into detalle_de_pedido values(3,1,12)
+insert into detalle_de_pedido values(4,6,8)
+insert into detalle_de_pedido values(4,7,10)
+insert into detalle_de_pedido values(5,9,50)
+
+insert into detalle_de_pedido values(6,11,20)
+insert into detalle_de_pedido values(6,12,10)
+insert into detalle_de_pedido values(6,13,15)
+insert into detalle_de_pedido values(6,14,13)
+insert into detalle_de_pedido values(7,11,5)
+insert into detalle_de_pedido values(7,13,30)
+insert into detalle_de_pedido values(8,15,45)
+insert into detalle_de_pedido values(8,12,45)
+insert into detalle_de_pedido values(8,13,36)
+insert into detalle_de_pedido values(9,11,22)
+insert into detalle_de_pedido values(10,16,18)
+insert into detalle_de_pedido values(10,15,10)
+insert into detalle_de_pedido values(10,9,60)
+
+
+insert into detalle_de_pedido values(11,12,10)
+insert into detalle_de_pedido values(11,13,10)
+insert into detalle_de_pedido values(11,4,3)
+insert into detalle_de_pedido values(12,1,15)
+insert into detalle_de_pedido values(12,3,20)
+insert into detalle_de_pedido values(12,15,40)
+insert into detalle_de_pedido values(13,2,15)
+insert into detalle_de_pedido values(13,13,16)
+insert into detalle_de_pedido values(13,11,12)
+insert into detalle_de_pedido values(14,16,8)
+insert into detalle_de_pedido values(14,7,10)
+insert into detalle_de_pedido values(15,9,50)
+
+
+insert into detalle_de_pedido values(16,2,16)
+insert into detalle_de_pedido values(16,12,15)
+insert into detalle_de_pedido values(16,3,10)
+insert into detalle_de_pedido values(17,14,23)
+insert into detalle_de_pedido values(17,11,15)
+insert into detalle_de_pedido values(18,13,20)
+insert into detalle_de_pedido values(18,5,10)
+insert into detalle_de_pedido values(18,2,15)
+insert into detalle_de_pedido values(19,3,76)
+insert into detalle_de_pedido values(19,1,22)
+insert into detalle_de_pedido values(19,16,8)
+insert into detalle_de_pedido values(19,7,30)
+insert into detalle_de_pedido values(19,9,50)
+
+
+insert into detalle_de_pedido values(20,1,10)
+insert into detalle_de_pedido values(20,2,10)
+insert into detalle_de_pedido values(20,3,10)
+insert into detalle_de_pedido values(21,1,10)
+insert into detalle_de_pedido values(21,2,10)
+insert into detalle_de_pedido values(21,3,10)
+insert into detalle_de_pedido values(21,4,3)
+insert into detalle_de_pedido values(22,1,15)
+insert into detalle_de_pedido values(22,3,20)
+insert into detalle_de_pedido values(22,5,40)
+insert into detalle_de_pedido values(23,2,15)
+insert into detalle_de_pedido values(23,3,16)
+insert into detalle_de_pedido values(23,1,12)
+insert into detalle_de_pedido values(24,6,8)
+insert into detalle_de_pedido values(24,7,10)
+insert into detalle_de_pedido values(25,9,50)
+
+insert into detalle_de_pedido values(26,2,16)
+insert into detalle_de_pedido values(26,12,15)
+insert into detalle_de_pedido values(26,3,10)
+insert into detalle_de_pedido values(27,14,23)
+insert into detalle_de_pedido values(27,11,15)
+insert into detalle_de_pedido values(28,13,20)
+insert into detalle_de_pedido values(28,5,10)
+insert into detalle_de_pedido values(28,2,15)
+insert into detalle_de_pedido values(28,3,76)
+insert into detalle_de_pedido values(28,1,22)
+insert into detalle_de_pedido values(28,16,8)
+insert into detalle_de_pedido values(28,7,30)
+insert into detalle_de_pedido values(28,9,50)

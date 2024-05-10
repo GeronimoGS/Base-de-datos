@@ -1,0 +1,230 @@
+Sentencias para crear la base de datos "Bariloche" e insertar registros en  las tablas
+
+create database bariloche
+use bariloche
+
+CREATE TABLE [Establecimiento](
+	[razon_social] [varchar](100) NOT NULL,
+	[direccion] [varchar](100) NOT NULL,
+	[telefono] [char](10) NOT NULL,
+	[contacto] [int] NULL,
+ CONSTRAINT [PK_Establecimientos] PRIMARY KEY  
+(
+	[razon_social] ASC
+)
+) ON [PRIMARY]
+
+insert into establecimiento values('El Bostezo','ruta prov. 205 km 323','0224982345',2);
+insert into establecimiento values('Rincón del Lago','ruta prov. 101 km 53','0224982124',null);
+insert into establecimiento values('El Desafio','ruta nac. 40 km 540','0224965324',null);
+insert into establecimiento values('Nido del Condor','ruta nac. 22 km 23','0224989856',10);
+insert into establecimiento values('Las Grutas','ruta nac. 22 km 323','0224987548',null);
+insert into establecimiento values('Pire Pal','ruta nac. 22 km 214','0224980345',null);
+insert into establecimiento values('Arauco Hue','ruta nac. 40 km 40','0224999545',17);
+
+CREATE TABLE [actividades](
+	[id_actividad] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [varchar](100) NULL,
+	[nivel_dificultad] [int] NULL,
+ CONSTRAINT [PK_actividades] PRIMARY KEY CLUSTERED
+(
+	[id_actividad] ASC
+)
+) ON [PRIMARY]
+
+insert into actividades(descripcion,nivel_dificultad) values('Cabalgata 1/2 día',1);
+insert into actividades(descripcion,nivel_dificultad) values('Cabalgata día entero',3);
+insert into actividades(descripcion,nivel_dificultad) values('Avistaje de aves',1);
+insert into actividades(descripcion,nivel_dificultad) values('Trekking',1);
+insert into actividades(descripcion,nivel_dificultad) values('Trekking',3);
+insert into actividades(descripcion,nivel_dificultad) values('Rafting',5);
+insert into actividades(descripcion,nivel_dificultad) values('Rafting',7);
+insert into actividades(descripcion,nivel_dificultad) values('Rafting',10);
+insert into actividades(descripcion,nivel_dificultad) values('Ciclismo',1);
+insert into actividades(descripcion,nivel_dificultad) values('Ciclismo',2);
+insert into actividades(descripcion,nivel_dificultad) values('Kayak',3);
+insert into actividades(descripcion,nivel_dificultad) values('Escalada y Rappell',3);
+insert into actividades(descripcion,nivel_dificultad) values('Escalada y Rappell',5);
+insert into actividades(descripcion,nivel_dificultad) values('Escalada y Rappell',9);
+
+drop table [establecimiento_actividad]
+CREATE TABLE [establecimiento_actividad](
+    [id_establecimiento_actividad] [int] IDENTITY(1,1) NOT NULL,
+	[id_actividad] [int]  NOT NULL,
+	[nombre_establecimiento] [varchar](100) NOT NULL,
+	[dia_semana] [char](9) NOT NULL,
+CONSTRAINT [PK_establecimiento_actividad] PRIMARY KEY
+(
+	[id_establecimiento_actividad] ASC
+ )	
+) ON [PRIMARY]
+
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(1,' Arauco Hue', 'Lunes');
+
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(2,' Arauco Hue', 'Domingo');
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(4,' Arauco Hue', 'Jueves');
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(5,' Arauco Hue', 'Viernes');
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(6,' Arauco Hue', 'Lunes');
+
+
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(6,' Nido del Condor, 'Domingo');
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(10,' Nido del Condor', 'Jueves');
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(3,' Nido del Condor', 'Viernes');
+insert into establecimiento_actividad (id_actividad,nombre_establecimiento, dia_semana) values(11,' Nido del Condor', 'Lunes');
+
+
+CREATE TABLE [tipo_habitacion](
+	[id_tipo_habitacion] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [varchar](50) NULL,
+ CONSTRAINT [PK_tipo_habitacion] PRIMARY KEY
+(
+	[id_tipo_habitacion] ASC
+)
+) ON [PRIMARY]
+
+insert into tipo_habitacion(descripcion) values('Single');
+insert into tipo_habitacion(descripcion) values('Doble');
+insert into tipo_habitacion(descripcion) values('Triple');
+insert into tipo_habitacion(descripcion) values('Suite');
+insert into tipo_habitacion(descripcion) values('Suite Junior');
+insert into tipo_habitacion(descripcion) values('Suite Superior');
+
+CREATE TABLE [empleados](
+	[id_empleado] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [varchar](100) NOT NULL,
+	[direccion] [varchar](100) NOT NULL,
+	[cuil] [char](11) NOT NULL,
+	[nombre_establecimiento] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_empleado] PRIMARY KEY
+(
+	[id_empleado] ASC
+)
+) ON [PRIMARY]
+
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Roberto Lagos','ruta prov. 205 km 323','20187569543','El Bostezo');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Alicia Suarez','ruta prov. 205 km 323','20137569543','El Bostezo');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Juan Fierro','ruta prov. 205 km 323','20137349543','El Bostezo');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Rogel Kupti','ruta prov. 205 km 323','20167666543','El Bostezo');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Alejandra Gomez','ruta prov. 205 km 323','20124569543','El Bostezo');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Carlos Moreno','ruta prov. 205 km 323','21333569543','El Bostezo');
+
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Carmen Castro','ruta prov 101 km 53','30187569543','Nido del Condor');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Amanda Caspio','ruta prov 101 km 53','30157569543','Nido del Condor');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Victoria Mandel','ruta prov 101 km 53','22157999543','Nido del Condor');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Esteban Klati','ruta prov 101 km 53','20197569543','Nido del Condor');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Alejandro Silvestre','ruta prov 101 km 53','21227569543','Nido del Condor');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Carola Peterson','ruta prov 101 km 53','21217569543','Nido del Condor');
+
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Gala Peter','ruta nac. 40 km 40','21456549543','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Olga Ramirez','ruta nac. 40 km 40','21217568653','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Ricardo Rojas','ruta nac. 40 km 40','21785569543','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Armando Gastaldi','ruta nac. 40 km 40','21623569543','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Viviana Reyna','ruta nac. 40 km 40','21217569547','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Leonidas Pascual','ruta nac. 40 km 40','30117569543','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Marcela Rivada','ruta nac. 40 km 40','21217123543','Arauco Hue');
+insert into empleados(nombre,direccion,cuil,nombre_establecimiento) values ('Augusto Mondia','ruta nac. 40 km 40','21456569543','Arauco Hue');
+
+CREATE TABLE [establecimiento_habitacion](
+	[id_habitacion] [int] IDENTITY(1,1) NOT NULL,
+	[nombre_establecimiento] [varchar](100) NOT NULL,
+	[id_tipo_habitacion] [int] NOT NULL,
+	[nro_habitacion] [char](3) NOT NULL,
+	[tarifa] [int] NOT NULL,
+	[banio] [char](1) NOT NULL,
+ CONSTRAINT [PK_establecimiento_habitacion] PRIMARY KEY
+(
+	[id_habitacion] ASC
+)
+) ON [PRIMARY]
+
+
+insert into establecimiento_habitacion values('Pire Pal',1,101,115,'S');
+insert into establecimiento_habitacion values('Pire Pal',2,102,145,'S');
+insert into establecimiento_habitacion values('Pire Pal',2,103,145,'S');
+insert into establecimiento_habitacion values('Pire Pal',1,201,115,'S');
+insert into establecimiento_habitacion values('Pire Pal',2,202,145,'S');
+insert into establecimiento_habitacion values('Nido del Condor',1,101,135,'S');
+insert into establecimiento_habitacion values('Nido del Condor',2,102,185,'S');
+insert into establecimiento_habitacion values('Nido del Condor',2,201,185,'S');
+insert into establecimiento_habitacion values('Nido del Condor',2,202,115,'S');
+insert into establecimiento_habitacion values('Nido del Condor',6,301,345,'S');
+insert into establecimiento_habitacion values('El Bostezo',1,101,115,'S');
+insert into establecimiento_habitacion values('El Bostezo',2,102,130,'S');
+insert into establecimiento_habitacion values('El Bostezo',2,103,130,'S');
+insert into establecimiento_habitacion values('El Bostezo',3,104,105,'N');
+insert into establecimiento_habitacion values('El Bostezo',1,201,115,'S');
+insert into establecimiento_habitacion values('El Bostezo',2,202,130,'S');
+insert into establecimiento_habitacion values('El Bostezo',2,203,130,'S');
+insert into establecimiento_habitacion values('El Bostezo',3,204,105,'N');
+insert into establecimiento_habitacion values('El Bostezo',4,301,215,'S');
+insert into establecimiento_habitacion values('El Bostezo',5,302,215,'S');
+insert into establecimiento_habitacion values('Arauco Hue',1,101,100,'N');
+insert into establecimiento_habitacion values('Arauco Hue',2,102,140,'S');
+insert into establecimiento_habitacion values('Arauco Hue',2,103,140,'S');
+insert into establecimiento_habitacion values('Arauco Hue',1,201,100,'N');
+insert into establecimiento_habitacion values('Arauco Hue',2,202,140,'S');
+insert into establecimiento_habitacion values('Arauco Hue',2,203,140,'S');
+insert into establecimiento_habitacion values('Arauco Hue',4,301,255,'S');
+insert into establecimiento_habitacion values('Arauco Hue',5,302,255,'S');
+
+CREATE TABLE [pasajeros](
+	[id_pax] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [varchar](100) NOT NULL,
+	[dni] [char](8) NOT NULL
+CONSTRAINT [PK_pax] PRIMARY KEY
+(
+	[id_pax] ASC
+)
+) ON [PRIMARY]
+
+insert into pasajeros values('Aguirre,Victor Daniel','20125487');
+insert into pasajeros values('Alonso,Veronica Adriana','18569874');
+insert into pasajeros values('Amado,Sergio Horacio','32456897');
+insert into pasajeros values('Araguna,Santiago','25789410');
+insert into pasajeros values('Asis,Ruben Francisco','15646987');
+insert into pasajeros values('Aspres,Rodolfo','20481487');
+insert into pasajeros values('Bagnarelli,Ricardo Marcelo','18925874');
+insert into pasajeros values('Basalo,Patricia Mabel','32812897');
+insert into pasajeros values('Benvenuti,Osvaldo Raul','26145410');
+insert into pasajeros values('Blanc,Oscar Alejandro','16002987');
+insert into pasajeros values('Boroni,Orlando','20837487');
+insert into pasajeros values('Cebeiro,Norma Beatriz Liliana','19281874');
+insert into pasajeros values('Cladera,Nestor Gustavo','33168897');
+insert into pasajeros values('Degiusti,Nestor Daniel','26501410');
+insert into pasajeros values('Derrer,Monica Adriana','16358987');
+insert into pasajeros values('Di Battista,Miguel Angel','21193487');
+insert into pasajeros values('Dicianna,Martin Marcelo Adrian','19637874');
+insert into pasajeros values('Enriquez Macias,Marta Noemi','33524897');
+insert into pasajeros values('Ferrer,Marta Noemi','26857410');
+insert into pasajeros values('Fliess,Maria Victoria','16714987');
+insert into pasajeros values('Fohs,Maria Ines','21549487');
+insert into pasajeros values('Ghidoli,Maria Gabriela','19993874');
+insert into pasajeros values('Grasso,María Eugenia','33880897');
+insert into pasajeros values('Jabif,Maria De Los Milagros','27213410');
+insert into pasajeros values('Lucero,Marcos Andres','17070987');
+insert into pasajeros values('Mazzucchelli,Marcela Alejandra','21905487');
+insert into pasajeros values('Monroy,Liliana','20349874');
+insert into pasajeros values('Montiel Nucci,Juan Pablo','34236897');
+insert into pasajeros values('Navarro,Joaquin','27569410');
+insert into pasajeros values('Peon,Ines Raquel','17426987');
+insert into pasajeros values('Pérez Teruel,Gustavo Adolfo Enrique','22261487');
+insert into pasajeros values('Radvanski,Grettel Eugenia Del Valle','20705874');
+insert into pasajeros values('Ramirez,Flavia','34592897');
+insert into pasajeros values('Ramos,Fatima','27925410');
+insert into pasajeros values('Rizo Avellaneda,Ester Elena','17782987');
+insert into pasajeros values('Ruiz Diaz,Elizabeth Nancy','22617487');
+insert into pasajeros values('Saladino,Daniel Rodolfo','21061874');
+insert into pasajeros values('Sanchez,Daniel Marcelino','34948897');
+insert into pasajeros values('Soro,Aida Mabel','28281410');
+insert into pasajeros values('Villares,Adrian Edgardo','18138987')
+
+
+CREATE TABLE [pax_habitacion](
+	[id_pax] [int] NOT NULL,
+	[id_habitacion] [int] NOT NULL
+CONSTRAINT [PK_paxhabi] PRIMARY KEY
+(
+	[id_pax] ASC,
+	[id_habitacion] ASC
+)
+) ON [PRIMARY]

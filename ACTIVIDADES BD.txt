@@ -1,0 +1,1034 @@
+1
+ALTER TABLE detalle_pedido add cantidad numeric
+
+2
+ALTER TABLE cliente add limite_credito money not null default (0);
+
+3
+
+
+
+
+
+alter table lista add check (ganancia_porcentaje>0);
+
+
+
+
+
+
+
+
+alter table oficina add ciudad varchar(50);
+
+select * from oficina
+
+alter table pedido add fecha_entrega as (fecha_pedido + 30)
+
+
+
+
+select descripcion froM oficina
+
+
+
+
+select descripcion, precio_costo, (precio_costo*1.21) as precio_con_iva  from producto
+
+select apellido, nombre,DATEDIFF(YEAR, fecha_nacimiento,GETDATE())as edad,FORMAT(fecha_nacimiento,'dd/MM') as fecha_cumple
+  from empleado
+
+
+  select nombre, apellido from empleado
+  where nombre = 'maria'
+  order by apellido
+
+
+  select * from cliente
+  where razon_social like 'L%'
+  order by codigo_cliente desc
+  
+
+  select * from pedido
+  where MONTH(fecha_pedido) = '3'
+  order by fecha_pedido
+
+  select * from oficina
+  where codigo_director is null
+
+
+  select top 4 * from producto
+  order by precio_costo
+  
+  select top 3 codigo_empleado from datos_contrato
+  order by cuota desc
+
+  -------------------------------------------------------------------------------------------------------
+
+
+  select p.descripcion, f.razon_social, s.cantidad
+  from producto p, fabricante f, stock s
+  where p.codigo_fabricante = f.codigo_fabricante and
+		p.codigo_producto = s.codigo_producto
+  order by f.razon_social, p.descripcion
+
+
+  SELECT p.codigo_pedido, p.fecha_pedido, e.apellido as vendedor , c.razon_social as comprador 
+  FROM pedido p, empleado e, cliente c
+  WHERE	p.codigo_empleado = e.codigo_empleado and
+		p.codigo_cliente = c.codigo_cliente
+
+  
+
+  select e.codigo_empleado, e.apellido, c.cuota, o.descripcion, a.apellido as Jefe
+  from empleado e, datos_contrato c, oficina o, empleado a
+  where e.codigo_empleado = c.codigo_empleado and
+		o.codigo_oficina = e.codigo_oficina and
+		a.codigo_empleado = e.codigo_jefe or
+		a.codigo_empleado = null
+		order by c.cuota desc
+
+		select * from empleado
+
+  select distinct( c.razon_social)
+  from cliente c, pedido p
+  where MONTH(p.fecha_pedido) = 4
+
+  select * from pedido
+
+
+  select distinct p.descripcion
+  from producto p, pedido ped, detalle_pedido d
+  where MONTH(ped.fecha_pedido) = 3  and
+		p.codigo_producto = d.codigo_producto 
+
+
+
+  select distinct e.*, DATEDIFF(YEAR, d.fecha_contrato, GETDATE() )
+  from empleado e, datos_contrato d
+  where e.codigo_empleado = d.codigo_empleado and
+  DATEDIFF(YEAR, d.fecha_contrato, GETDATE()) > 22
+  order by DATEDIFF(YEAR, d.fecha_contrato, GETDATE()) desc
+		
+		select * from datos_contrato
+
+  select c.razon_social from cliente c, lista l
+  where c.codigo_lista = l.codigo_lista and
+		l.descripcion   = 'Mayorista'
+  order by c.razon_social
+
+
+  select distinct c.razon_social, pro.descripcion
+  from cliente c, pedido p, detalle_pedido d, producto pro
+  where p.codigo_cliente = c.codigo_cliente and
+		d.codigo_pedido = p.codigo_pedido and
+		d.codigo_producto = pro.codigo_producto 
+  order by c.razon_social, pro.descripcion
+
+
+  select p.descripcion,(s.pto_reposicion-s.cantidad) as Cantidad_a_comprar, f.razon_social
+  from producto p, stock s, fabricante f
+  where s.codigo_producto = p.codigo_producto and
+		s.cantidad < s.pto_reposicion and
+		f.codigo_fabricante = p.codigo_fabricante
+  order by f.razon_social, p.descripcion
+
+
+  select distinct e.apellido, d.cuota
+  from empleado e, datos_contrato d
+  where e.codigo_empleado = d.codigo_empleado and
+		(d.cuota < '50000' or
+		d.cuota > '100000')
+
+		select * from datos_contrato
+
+select *
+into aux_empleados
+from empleado
+
+select * from aux_empleados
+
+select * from producto
+select * from lista 
+
+select p.descripcion,l.descripcion, (((l.ganancia_porcentaje*p.precio_costo)/100)+p.precio_costo)
+from producto p, lista l
+order by l.descripcion
+
+select * from fabricante
+
+ select * from producto
+
+
+DELETE  FROM fabricante 
+where codigo_fabricante not in (select codigo_fabricante from producto)
+
+
+Delete from cliente
+where codigo_cliente not in (select codigo_cliente from pedido)
+
+select * from cliente
+
+update datos_contrato
+set cuota = cuota *1.05
+where fecha_contrato < '01-01-1999'
+
+select * from datos_contrato
+
+update empleado
+set codigo_empleado = '112'
+where codigo_empleado = '110'
+
+select * from empleado
+select * from datos_contrato
+select * from pedido
+
+
+select * 
+
+
+
+select * 
+into aux_productos
+from producto
+
+
+update producto
+set precio_costo = precio_costo* 1.10
+
+select * from producto
+select * from aux_productos
+
+
+update producto
+set precio_costo = aux.precio_costo
+FROM producto p,aux_productos aux
+where p.codigo_producto = aux.codigo_producto
+
+update stock
+set pto_reposicion = 600
+from stock s, fabricante f, producto p
+where p.codigo_producto = s.codigo_producto and
+	  p.codigo_fabricante = f.codigo_fabricante and
+	  f.razon_social = 'Tomasti Hnos.'
+
+	  select * from stock s, fabricante f,producto p
+	  where p.codigo_fabricante = f.codigo_fabricante and
+			s.codigo_producto = p.codigo_producto and
+			f.razon_social = 'Tomasti Hnos.'
+
+
+select AVG(p.precio_costo) from producto p, fabricante f
+where f.razon_social = 'ABC Comercial' and 
+	p.codigo_fabricante = f.codigo_fabricante
+
+	select f.razon_social, count(p.codigo_fabricante)
+	from producto p, fabricante f
+	where p.codigo_fabricante = f.codigo_fabricante
+	group by f.razon_social
+
+
+
+select p.codigo_pedido, p.fecha_pedido, c.razon_social,sum(pro.precio_costo*d.cantidad)
+from pedido p, cliente c, detalle_pedido d, producto pro
+where c.codigo_cliente = p.codigo_cliente and
+	  d.codigo_pedido = p.codigo_pedido and
+	  pro.codigo_producto = d.codigo_producto
+group by c.razon_social, p.fecha_pedido,p.codigo_pedido
+
+
+	  select * from datos_contrato
+
+select * from detalle_pedido
+
+
+update datos_contrato
+set ventas = '0'
+ (select sum(pro.precio_costo*d.cantidad)
+				from producto pro, detalle_pedido d, pedido p,cliente c			    )
+from pedido p, empleado e, detalle_pedido d
+where p.codigo_empleado = e.codigo_empleado and
+	  d.codigo_pedido = p.codigo_pedido 
+
+
+	  update datos_contrato
+set ventas =(select sum(d.cantidad*p.precio_costo) as Precio from detalle_pedido d, producto p, pedido ped
+where p.codigo_producto=d.codigo_producto and
+	  codigo_empleado = ped.codigo_empleado 
+group by d.codigo_pedido)
+
+
+
+
+
+
+
+select  o.descripcion, count(e.codigo_oficina) 
+from empleado e, oficina o
+where o.codigo_oficina = e.codigo_oficina
+group by o.descripcion
+
+
+select top 1 p.codigo_pedido, p.fecha_pedido  
+from pedido p
+order by p.fecha_pedido ASC
+
+SELECT * FROM pedido
+
+
+select count(codigo_empleado) from pedido
+group by codigo_empleado
+
+SELECT AVG(cuota) as Promedio_cuota FROM datos_contrato
+
+
+select e.apellido, count(p.codigo_empleado) as Cantidad_de_ventas
+from pedido p, empleado e
+where p.codigo_empleado = e.codigo_empleado
+group by p.codigo_empleado, e.apellido
+order by e.apellido
+
+select pro.descripcion, count(d.codigo_producto) AS Cantidad_vendida_marzo
+from detalle_pedido d, pedido p, producto pro 
+where d.codigo_producto = pro.codigo_producto and
+	  p.codigo_pedido = d.codigo_pedido       and
+	  month(p.fecha_pedido) = 3
+GROUP by PRO.descripcion
+
+select p.descripcion
+from producto p, stock s
+where p.codigo_producto = s.codigo_producto and
+	  s.cantidad < s.pto_reposicion
+
+
+select  c.razon_social
+from cliente c, pedido p
+where p.codigo_empleado = (select codigo_empleado from empleado where apellido = 'Gonzales' and nombre = 'Analia')
+	  and c.codigo_cliente = p.codigo_cliente	  
+
+
+select * from empleado
+
+
+select e.*
+from empleado e, oficina o
+where e.codigo_oficina <> (select codigo_oficina from oficina where descripcion = 'Ventas Exterior')
+      and e.codigo_oficina = o.codigo_oficina
+
+
+
+select p.descripcion, sum(d.cantidad) 
+from detalle_pedido d, producto p
+where p.codigo_producto = d.codigo_producto
+group by p.descripcion
+having(sum(d.cantidad)) < '200'
+
+select * from pedido
+
+select * from detalle_pedido
+
+select distinct f.razon_social
+from fabricante f, pedido p, detalle_pedido d
+where razon_social in (select f.razon_social
+							from fabricante f, pedido p, detalle_pedido d, producto pro
+							where p.codigo_pedido = d.codigo_pedido and
+							d.codigo_producto = pro.codigo_producto and
+							pro.codigo_fabricante = f.codigo_fabricante and
+							month(p.fecha_pedido) = '4') and
+	p.codigo_pedido = d.codigo_pedido and
+	MONTH(p.fecha_pedido) = '4'
+
+
+
+select p.descripcion ,sum(d.cantidad)
+from producto p, pedido ped, detalle_pedido d
+where ped.codigo_pedido = d.codigo_pedido and
+	  d.codigo_producto = p.codigo_producto and
+	  month(ped.fecha_pedido) = '3' 
+group by p.descripcion
+having sum(d.cantidad)>70
+
+
+SELECT * FROM empleado
+
+
+select}
+
+select p.codigo_cliente
+from pedido p
+
+
+
+
+TP 4
+
+
+CREATE VIEW Productos_Fabricantes
+AS
+SELECT f.razon_social,p.descripcion, s.cantidad
+FROM producto p, fabricante f, stock s
+WHERE p.codigo_fabricante = f.codigo_fabricante and
+	  p.codigo_producto = s.codigo_producto
+
+select * from Productos_Fabricantes
+
+
+
+DECLARE oficinas CURSOR 
+FOR
+SELECT o.descripcion, e.apellido, e.nombre,o.codigo_director,e.codigo_empleado
+FROM oficina o, empleado e
+where e.codigo_oficina = o.codigo_oficina
+
+open oficinas
+ declare @descripcion char (50)
+ declare @nombre as char (50)
+ declare @apellido as char (50)
+ declare @codigo_director as numeric(10)
+ declare @codigo_empleado as numeric(10)
+
+FETCH NEXT FROM oficinas INTO @descripcion,@apellido, @nombre,
+							  @codigo_director,@codigo_empleado
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF @codigo_director = @codigo_empleado
+			PRINT RTRIM(@nombre)  + ', ' + RTRIM(@apellido) + 'es director de ' + RTRIM(@descripcion)
+			ELSE
+			PRINT RTRIM(@nombre)  + ', ' + RTRIM(@apellido) + 'es empleado de ' + RTRIM(@descripcion) 
+	FETCH NEXT FROM oficinas INTO @descripcion,@apellido, @nombre,
+    							  @codigo_director,@codigo_empleado
+	END
+
+	CLOSE oficinas 
+	DEALLOCATE oficinas
+---------------------------------------------------------------
+
+DECLARE datos_encabezado CURSOR
+FOR
+SELECT p.codigo_pedido, p.fecha_pedido, p.codigo_empleado, p.codigo_cliente,p.fecha_entrega,
+	   c.razon_social,e.nombre, e.apellido ,sum(pro.precio_costo*d.cantidad) as Detalle_valorizado
+FROM pedido p, cliente c, detalle_pedido d, producto pro, empleado e
+WHERE  p.codigo_pedido = d.codigo_pedido and
+	   p.codigo_empleado = e.codigo_empleado and
+	   p.codigo_cliente = c.codigo_cliente and
+	   d.codigo_producto = pro.codigo_producto 
+group by p.codigo_pedido, p.fecha_pedido,p.codigo_empleado,p.codigo_cliente,p.fecha_entrega,
+	   c.razon_social,e.nombre, e.apellido 
+
+OPEN datos_encabezado
+	declare @codped as INT
+	declare	@fechaped as DATETIME
+	declare	@codemp as INT
+	declare	@codcli as INT
+	declare @fechaentre datetime 
+	declare @razonsocial as CHAR (50)
+	declare @nombreemp as char (50)
+	declare @apellemp as char (50)
+	declare @total as numeric (20)
+
+FETCH NEXT FROM datos_encabezado INTO @codped,@fechaped,@codemp,@codcli,@fechaentre,
+									  @razonsocial,@nombreemp,@apellemp,@total
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		print @fechaentre
+		declare @ahora as datetime = getdate()
+		print @ahora
+	
+		print @codped  + @FECHAPED + @codemp + @codcli + @fechaentre + 
+			  @razonsocial + @nombreemp + @apellemp + @total
+	
+	FETCH NEXT FROM datos_encabezado INTO @codped,@fechaped,@codemp,@codcli,@fechaentre,
+									  @razonsocial,@nombreemp,@apellemp,@total
+	
+	END
+
+CLOSE datos_encabezado
+DEALLOCATE datos_encabezado
+
+-------------------------------------------------------------------------------
+
+
+select * from precio_venta
+select * from producto
+update precio_venta
+set precio = precio +(p.precio_costo * ((l.ganancia_porcentaje/100)+1))
+from lista l, producto p, precio_venta pv
+where p.codigo_producto = pv.codigo_producto and
+	  pv.codigo_lista = l.codigo_lista
+
+-----------------------------------------------------------------------------------
+
+
+ALTER TABLE cliente add clave varchar(50)
+
+DECLARE CAMBIOCLAVE CURSOR
+FOR select c.codigo_cliente,c.razon_social,c.clave
+	from cliente c
+
+open cambioclave
+
+	declare @codcliente int
+	declare @razon char (50)
+	declare @clave varchar (50)
+
+		fetch next from cambioclave into @codcliente, @razon , @clave
+	
+	WHILE @@FETCH_STATUS = 0
+		BEGIN
+		
+		PRINT RTRIM(@CODCLIENTE)+', ' + RTRIM(@RAZON)
+		update cliente	
+		set clave = @razon
+		WHERE @codcliente = codigo_cliente
+		FETCH NEXT from	CAMBIOCLAVE INTO @codcliente,@razon,@clave
+
+		END
+
+
+close cambioclave
+deallocate cambioclave
+
+
+select * from cliente
+
+
+IF @codcliente = @codcliente
+		update cliente	
+		set clave = @razon
+
+
+
+------------------------------------------------------------------
+
+
+CREATE PROCEDURE MODIFICAR_PRECIO
+		(@tipo varchar (10),
+		 @porcentaje numeric (4))
+AS
+BEGIN TRANSACTION
+	IF @tipo = 'Mayorista'
+		BEGIN
+			UPDATE precio_venta
+			SET precio = (precio*((@porcentaje/100)+1))
+			WHERE codigo_lista = '1' and
+				   precio < (SELECT AVG(precio) FROM precio_venta WHERE codigo_lista = '1')
+		END
+	IF @tipo = 'Minorista'
+		BEGIN
+			UPDATE precio_venta
+			SET precio = (precio*((@porcentaje/100)+1))
+			WHERE  codigo_lista = '2' and
+				   precio < (SELECT AVG(precio) FROM precio_venta WHERE codigo_lista = '2')
+		END
+	IF @@ERROR <> 0 or @tipo <> 'Minorista' or @tipo <> 'Mayorista'
+		BEGIN
+			ROLLBACK TRANSACTION
+			Print 'NO SE PUDO ACTUALIZAR'
+			RETURN
+		END
+COMMIT TRANSACTION
+RETURN
+
+
+SELECT PRECIO FROM
+precio_venta
+WHERE codigo_lista = 1
+
+SELECT * FROM lista
+
+
+EXEC MODIFICAR_PRECIO
+		@tipo = 'caca',	
+		@porcentaje = 20
+
+
+CREATE PROCEDURE BUSCAR_PRODUCTO
+		@producto CHAR 
+AS
+BEGIN TRANSACTION 
+	IF @producto = (SELECT top 1 descripcion FROM producto)
+	BEGIN
+	SELECT * 
+	FROM producto
+	WHERE descripcion LIKE @producto + '%'
+	END 
+	ELSE
+	BEGIN 
+	PRINT 'PRODUCTO NO ENCONTRADO'
+	END
+COMMIT TRANSACTION
+RETURN
+
+EXEC BUSCAR_PRODUCTO
+@producto = 'Linterna '
+
+select * from producto
+
+	DECLARE @PRO CHAR  = 'linterna'
+	SELECT * 
+	FROM producto
+	WHERE descripcion LIKE ('%'+@pro+'%')
+
+
+---------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE CANTIDAD
+		 @RAZON_SOCIAL CHAR (50) = NULL
+AS
+BEGIN
+	 IF @RAZON_SOCIAL IS NULL
+		BEGIN
+				SELECT F.razon_social, p.descripcion, (S.pto_reposicion-S.cantidad) AS cantidad_a_reponer, (S.pto_reposicion-S.cantidad) * p.precio_costo as precio_total_de_reposicion  
+				FROM fabricante F, producto P, stock S
+				WHERE f.codigo_fabricante = p.codigo_fabricante and
+					  p.codigo_producto = s.codigo_producto 
+				GROUP BY F.razon_social,S.cantidad, S.pto_reposicion, P.descripcion,p.precio_costo
+				HAVING S.cantidad < S.pto_reposicion
+		END
+		ELSE 
+		BEGIN
+			IF( @RAZON_SOCIAL = (SELECT razon_social FROM fabricante WHERE razon_social =  @RAZON_SOCIAL) )
+			BEGIN
+				SELECT F.razon_social, p.descripcion, (S.pto_reposicion-S.cantidad) AS cantidad_a_reponer, (S.pto_reposicion-S.cantidad) * p.precio_costo as precio_total_de_reposicion  
+				FROM fabricante F, producto P, stock S
+				WHERE f.codigo_fabricante = p.codigo_fabricante and
+					  p.codigo_producto = s.codigo_producto and
+					  f.razon_social = @RAZON_SOCIAL
+				GROUP BY F.razon_social,S.cantidad, S.pto_reposicion, P.descripcion,p.precio_costo
+				HAVING S.cantidad < S.pto_reposicion
+			END
+			ELSE
+			BEGIN 
+			PRINT 'FABRICANTE NO ENCONTRADO'
+			END
+			
+		END
+END
+RETURN
+
+EXEC CANTIDAD
+		@RAZON_SOCIAL= 'BASIC'
+
+----------------------------------------------------------------------
+
+
+CREATE PROCEDURE NUEVO_ACTUALIZAR
+			@NOMBRE CHAR(50),
+			@CANT INT,
+			@COD_FAB INT,
+			@PRECIO MONEY
+AS
+BEGIN
+		IF @NOMBRE = (SELECT descripcion FROM producto WHERE descripcion = @NOMBRE)
+		BEGIN
+		UPDATE stock
+		SET cantidad = cantidad + @CANT
+		WHERE codigo_producto =(SELECT codigo_producto FROM producto WHERE descripcion = @NOMBRE) 
+		
+		PRINT 'STOCK ACTUALIZADO'
+		
+		END
+		ELSE
+		BEGIN
+		INSERT INTO producto (descripcion, precio_costo, codigo_fabricante)
+					VALUES (@NOMBRE, @PRECIO, @COD_FAB)
+		INSERT INTO stock (codigo_producto,cantidad, pto_reposicion)
+					VALUES ((SELECT codigo_producto FROM producto WHERE @NOMBRE = descripcion), @CANT, @CANT)
+		PRINT 'PRODUCTO AGREGADO A LA LISTA DE PRODUCTO Y STOCKEADO' 
+		END
+END
+RETURN
+
+
+EXEC NUEVO_ACTUALIZAR
+			'Tornillo 5´',650,1,150
+
+			SELECT * FROM producto
+			SELECT * FROM stock
+
+
+			SELECT * FROM precio_venta
+
+
+CREATE TRIGGER TABLA_PRECIO_VENTA 
+ON producto 
+FOR insert
+AS
+ BEGIN 
+	INSERT INTO precio_venta (codigo_producto,codigo_lista,precio)
+				SELECT INS.codigo_producto,1,(INS.precio_costo*1.20) FROM inserted INS
+	INSERT INTO precio_venta (codigo_producto,codigo_lista,precio)
+				SELECT INS.codigo_producto, 2, (INS.precio_costo*1.30) FROM inserted INS
+ END
+RETURN
+
+
+insert into producto(descripcion,precio_costo,codigo_fabricante)
+					values ('Pila', 30, 3)
+
+
+create table auditoria_producto 
+		
+
+	(	codigo_producto int ,
+		descripcion char(50),
+		precio_costo money default 0,
+		codigo_fabricante int,
+	);
+
+
+
+
+
+	select * from auditoria_producto
+
+CREATE TRIGGER datos_viejos 
+ON producto
+FOR update
+AS
+	BEGIN
+	insert auditoria_producto (codigo_producto, descripcion,
+							   precio_costo, codigo_fabricante)
+	select d.codigo_producto,d.descripcion,d.precio_costo, d.codigo_fabricante from deleted d
+	END
+
+update producto
+set precio_costo = precio_costo+2
+where codigo_producto = 1001
+
+
+	select * from producto
+
+---------------------------------------------------------------------
+
+   
+    
+select * from articulo
+
+alter table articulo add precio_venta money
+
+
+update articulo
+set precio_venta = precio*1.05
+where cod_articulo = cod_articulo 
+
+
+sp_help articulo
+
+
+CREATE PROCEDURE aumentar_precio_10porc
+AS
+BEGIN 
+
+UPDATE articulo
+SET precio = (precio*1.10),  precio_venta=(precio_venta*1.10)
+WHERE cod_articulo = cod_articulo
+
+END
+RETURN
+
+select * from articulo
+exec aumentar_precio_10porc
+select * from articulo
+
+create table parametros
+		(id_parametro INT identity(1,1),
+		 descripcion varchar (50),
+		valor int
+		);
+
+insert into parametros (descripcion, valor)
+		Values ('Procentaje de ganancia',5)
+
+select * from articulo
+
+CREATE PROCEDURE aumentar_precio_parametro
+AS
+BEGIN
+
+UPDATE articulo
+SET precio_venta = precio_venta+(precio_venta*(select valor valor from parametros))/100
+
+END
+RETURN
+
+exec aumentar_precio_parametro
+
+
+alter table cliente add limite_credito money check (limite_credito <= '35000')
+
+sp_help cliente
+
+update cliente
+set limite_credito = '45000'
+where cod_cliente = 1
+
+
+
+select * from cliente
+
+create procedure actualizar_limite
+		@valor money
+AS
+BEGIN
+		IF @valor IS NOT NULL
+		BEGIN
+		update cliente
+		set limite_credito = @valor
+		END
+		ELSE 
+		BEGIN
+		RETURN
+		END
+
+END
+RETURN
+
+EXEC actualizar_limite
+		@VALOR = '10000'
+
+
+
+CREATE PROCEDURE NUEVO_ARTICULO
+			@DESCRIPCION VARCHAR(50),
+			@TIPO CHAR(1),
+			@PRECIO MONEY,
+			@ERROR INT = 0 
+AS
+
+BEGIN TRANSACTION
+	
+
+	INSERT articulo (descripcion, tipo_articulo, precio)
+			VALUES(@DESCRIPCION,@TIPO,@PRECIO)
+	IF @@ERROR <> 0
+	BEGIN 
+	SET @ERROR = 1
+	END
+
+	IF @ERROR = 1
+	BEGIN
+	PRINT 'ERROR'
+	ROLLBACK
+	END
+	ELSE
+	BEGIN
+	COMMIT
+	PRINT 'OPERACION TERMINADA CON EXITO'
+	END
+
+
+	EXEC NUEVO_ARTICULO
+			@DESCRIPCION = 'Toma corriente 10A',
+			@TIPO = 'A',
+			@PRECIO = '2,5'
+
+
+SELECT * FROM auditoria_articulo
+
+
+CREATE TABLE auditoria_articulo
+			(cod_articulo int,
+			 descripcion varchar(50),
+			 tipo_articulo CHAR (1),
+			 precio money,
+			 precio_venta money,
+			 fecha_actualizacion datetime,
+			 usuario Varchar (50)
+			 );			
+
+
+create trigger auditar_articulo
+ON articulo
+FOR UPDATE 
+AS
+BEGIN
+		insert auditoria_articulo (descripcion,tipo_articulo,precio,precio_venta,fecha_actualizacion)
+					select d.descripcion,d.tipo_articulo,d.precio,d.precio_venta,GETDATE() from deleted d
+
+END
+
+
+
+
+
+update articulo
+set descripcion = 'Lampara 25W'
+where descripcion = 'Lampara 26W'
+
+
+select * from auditoria_articulo
+
+
+
+CREATE PROCEDURE DATOS_ARTICULO
+			@ID_ART INT = NULL
+AS
+BEGIN
+
+		IF @ID_ART IS NOT NULL
+		BEGIN
+				SELECT a.descripcion, s.stock_actual, (s.punto_reorden-s.stock_actual) as falta_reponer, d.ubicacion_deposito
+				FROM articulo a, articulo_deposito s, deposito d
+				WHERE a.cod_articulo = @ID_ART and
+					  a.cod_articulo = s.cod_articulo and
+					  d.cod_deposito = s.cod_deposito
+				GROUP BY D.ubicacion_deposito
+		END
+		ELSE
+		BEGIN
+				SELECT a.descripcion, s.stock_actual, (s.punto_reorden-s.stock_actual) as falta_reponer, d.ubicacion_deposito
+				FROM articulo a, articulo_deposito s, deposito d
+				WHERE a.cod_articulo = s.cod_articulo and
+					  d.cod_deposito = s.cod_deposito
+				GROUP BY D.ubicacion_deposito,a.descripcion, s.stock_actual,s.punto_reorden
+		END
+RETURN
+
+select a.descripcion, s.stock_actual from articulo a, articulo_deposito s
+where s.cod_deposito=1
+
+
+
+
+
+
+TP 6
+
+     
+
+	 select razon_social from Establecimiento
+	 order by razon_social
+
+
+	 select * from empleados
+
+
+	 select nombre, direccion from empleados
+	 order by nombre desc
+
+
+	 select * from Establecimiento
+	 where contacto is null
+
+	 
+	 select * from empleados
+	 where nombre like'c%'
+
+
+
+
+	 select * from actividades
+	 where nivel_dificultad >= 5 and
+		   nivel_dificultad <= 10
+
+
+	select * from Establecimiento
+
+	select * from establecimiento_actividad ea
+
+	select * from tipo_habitacion
+
+
+	select * from establecimiento_habitacion
+
+
+	select distinct e.razon_social from Establecimiento e, tipo_habitacion t, establecimiento_habitacion eh
+	where t.descripcion = 'Suite Junior' and
+		  eh.nombre_establecimiento = e.razon_social and
+		  eh.id_tipo_habitacion = t.id_tipo_habitacion
+
+	
+	select eh.tarifa, eh.nro_habitacion,t.descripcion 
+	from Establecimiento e, tipo_habitacion t, establecimiento_habitacion eh 
+	where e.razon_social = 'Nido del condor' and
+		  eh.nombre_establecimiento = e.razon_social and
+		  t.id_tipo_habitacion = eh.id_tipo_habitacion
+	order by t.descripcion
+	
+	select * from establecimiento_habitacion
+		  select * from Establecimiento
+
+
+
+	select nombre_establecimiento,count(nombre_establecimiento) from empleados
+	group by nombre_establecimiento
+
+
+	select * FROM Establecimiento
+	SELECT * FROM establecimiento_habitacion
+	SELECT * FROM tipo_habitacion
+
+	SELECT eh.nombre_establecimiento,t.descripcion, count(eh.id_tipo_habitacion)
+	FROM establecimiento_habitacion eh,tipo_habitacion t
+	WHERE eh.id_tipo_habitacion = t.id_tipo_habitacion
+	GROUP BY EH.nombre_establecimiento, T.descripcion
+	ORDER BY EH.nombre_establecimiento
+	
+
+
+
+	select  e.nombre_establecimiento, t.descripcion, e.tarifa from establecimiento_habitacion e,tipo_habitacion t, Establecimiento es
+	where e.id_tipo_habitacion = t.id_tipo_habitacion and
+			e.nombre_establecimiento in (select razon_social from establecimiento) 
+	group by 
+
+
+
+
+
+	select * from establecimiento_habitacion
+
+	select nombre_establecimiento, count(banio) as baño_en_suite from establecimiento_habitacion
+	where banio = 'n'
+	group by nombre_establecimiento, banio
+
+
+
+	update establecimiento_habitacion
+	set tarifa = tarifa * 1.05
+	where nombre_establecimiento ='Pire Pal'
+
+	select * from establecimiento
+
+	select * from empleados
+
+	update Establecimiento
+	set telefono = '0224123456'
+	where razon_social ='El bostezo'
+
+	update Establecimiento
+	set contacto = (SELECT ROUND(((21 - 1) * RAND() + 1), 0))
+	where contacto = '11'
+
+
+
+
+
+	SELECT ROUND(((21 - 1) * RAND() + 1), 0)
+
+
+	delete  from actividades
+	where nivel_dificultad = '10'
+ 
+
+
+ select * from actividades
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,233 @@
+create database personas_idiomas;
+
+use personas_idiomas; 
+
+create table personas  (id_persona int primary key , nombre varchar(40) not null,
+ apellido varchar(40) not null)
+
+insert into personas values (1,'PENELOPE','GUINESS');
+insert into personas values (2,'NICK','WAHLBERG');
+insert into personas values (3,'ED','CHASE');
+insert into personas values (4,'JENNIFER','DAVIS');
+insert into personas values (5,'JOHNNY','LOLLOBRIGIDA');
+insert into personas values (6,'BETTE','NICHOLSON');
+insert into personas values (7,'GRACE','MOSTEL');
+insert into personas values (8,'MATTHEW','JOHANSSON');
+insert into personas values (9,'JOE','SWANK');
+insert into personas values (10,'CHRISTIAN','GABLE');
+insert into personas values (11,'ZERO','CAGE');
+insert into personas values (12,'KARL','BERRY');
+insert into personas values (13,'UMA','WOOD');
+insert into personas values (14,'VIVIEN','BERGEN');
+insert into personas values (15,'CUBA','OLIVIER');
+insert into personas values (16,'FRED','COSTNER');
+insert into personas values (17,'HELEN','VOIGHT');
+insert into personas values (18,'DAN','TORN');
+insert into personas values (19,'BOB','FAWCETT');
+insert into personas values (20,'LUCILLE','TRACY');
+insert into personas values (21,'KIRSTEN','PALTROW');
+insert into personas values (22,'ELVIS','MARX');
+insert into personas values (23,'SANDRA','KILMER');
+insert into personas values (24,'CAMERON','STREEP');
+insert into personas values (25,'KEVIN','BLOOM');
+insert into personas values (26,'RIP','CRAWFORD');
+insert into personas values (27,'JULIA','MCQUEEN');
+insert into personas values (28,'WOODY','HOFFMAN');
+insert into personas values (29,'ALEC','WAYNE');
+insert into personas values (30,'SANDRA','PECK');
+insert into personas values (31,'SISSY','SOBIESKI');
+insert into personas values (32,'TIM','HACKMAN');
+insert into personas values (33,'MILLA','PECK');
+insert into personas values (34,'AUDREY','OLIVIER');
+insert into personas values (35,'JUDY','DEAN');
+insert into personas values (36,'BURT','DUKAKIS');
+insert into personas values (37,'VAL','BOLGER');
+insert into personas values (38,'TOM','MCKELLEN');
+insert into personas values (39,'GOLDIE','BRODY');
+insert into personas values (40,'JOHNNY','CAGE');
+insert into personas values (41,'JODIE','DEGENERES');
+insert into personas values (42,'TOM','MIRANDA');
+insert into personas values (43,'KIRK','JOVOVICH');
+insert into personas values (44,'NICK','STALLONE');
+insert into personas values (45,'REESE','KILMER');
+insert into personas values (46,'PARKER','GOLDBERG');
+insert into personas values (47,'JULIA','BARRYMORE');
+insert into personas values (48,'FRANCES','DAY-LEWIS');
+insert into personas values (49,'ANNE','CRONYN');
+insert into personas values (50,'NATALIE','HOPKINS')
+
+select * from personas;
+
+create table idiomas  (id_idioma int primary key, nombreidioma varchar(40) not null);
+insert into idiomas values ( 1, 'ingles');
+insert into idiomas values ( 2, 'italiano');
+insert into idiomas values ( 3, 'japones');
+insert into idiomas values ( 4, 'mandarin');
+insert into idiomas values ( 5, 'frances');
+insert into idiomas values ( 6, 'aleman');
+insert into idiomas values ( 7, 'castellano')
+
+select * from idiomas;
+
+
+create table persona_idioma  (id_idioma int , id_persona int
+  primary key(id_idioma,id_persona),
+		foreign key(id_idioma)
+		references idiomas(id_idioma)
+		on update cascade on delete no action,
+		foreign key(id_persona)
+		references personas(id_persona)
+		on update cascade on delete no action)
+
+insert into persona_idioma values(1,1);
+insert into persona_idioma values(1,2);
+insert into persona_idioma values(1,3);
+insert into persona_idioma values(1,4);
+insert into persona_idioma values(1,5);
+insert into persona_idioma values(1,6);
+insert into persona_idioma values(1,7);
+insert into persona_idioma values(7,8);
+insert into persona_idioma values(7,9);
+insert into persona_idioma values(7,10);
+insert into persona_idioma values(7,11);
+insert into persona_idioma values(7,12);
+insert into persona_idioma values(1,13);
+insert into persona_idioma values(1,14);
+insert into persona_idioma values(1,15);
+insert into persona_idioma values(1,16);
+insert into persona_idioma values(1,17);
+insert into persona_idioma values(1,18);
+insert into persona_idioma values(1,19);
+insert into persona_idioma values(1,20);
+insert into persona_idioma values(2,21);
+insert into persona_idioma values(2,22);
+insert into persona_idioma values(2,23);
+insert into persona_idioma values(2,24);
+insert into persona_idioma values(2,25);
+insert into persona_idioma values(2,26);
+insert into persona_idioma values(3,27);
+insert into persona_idioma values(3,28);
+insert into persona_idioma values(3,29);
+insert into persona_idioma values(3,30);
+insert into persona_idioma values(3,31);
+insert into persona_idioma values(3,32);
+insert into persona_idioma values(4,33);
+insert into persona_idioma values(4,34);
+insert into persona_idioma values(4,35);
+insert into persona_idioma values(4,36);
+insert into persona_idioma values(4,37);
+insert into persona_idioma values(4,38);
+insert into persona_idioma values(4,39);
+insert into persona_idioma values(4,40);
+insert into persona_idioma values(4,41);
+insert into persona_idioma values(4,42);
+insert into persona_idioma values(5,43);
+insert into persona_idioma values(5,44);
+insert into persona_idioma values(5,45);
+insert into persona_idioma values(5,46);
+insert into persona_idioma values(5,47);
+insert into persona_idioma values(5,48);
+insert into persona_idioma values(5,49);
+insert into persona_idioma values(5,50);
+insert into persona_idioma values(3,1);
+insert into persona_idioma values(3,2);
+insert into persona_idioma values(3,3);
+insert into persona_idioma values(3,4);
+insert into persona_idioma values(3,5);
+insert into persona_idioma values(3,6);
+insert into persona_idioma values(3,7);
+insert into persona_idioma values(3,8);
+insert into persona_idioma values(5,9);
+insert into persona_idioma values(5,10);
+insert into persona_idioma values(5,11);
+insert into persona_idioma values(5,12);
+insert into persona_idioma values(5,13);
+insert into persona_idioma values(5,14);
+insert into persona_idioma values(5,15);
+insert into persona_idioma values(5,16);
+insert into persona_idioma values(5,17);
+insert into persona_idioma values(5,18);
+insert into persona_idioma values(7,19);
+insert into persona_idioma values(7,20);
+insert into persona_idioma values(7,21);
+insert into persona_idioma values(7,22);
+insert into persona_idioma values(7,23);
+insert into persona_idioma values(7,24);
+insert into persona_idioma values(7,25);
+insert into persona_idioma values(7,26);
+insert into persona_idioma values(7,27);
+insert into persona_idioma values(2,40);
+insert into persona_idioma values(2,41);
+insert into persona_idioma values(2,42);
+insert into persona_idioma values(2,43);
+insert into persona_idioma values(2,44);
+insert into persona_idioma values(2,45);
+insert into persona_idioma values(2,46);
+insert into persona_idioma values(2,47);
+insert into persona_idioma values(2,48);
+insert into persona_idioma values(2,49);
+insert into persona_idioma values(1,50);
+insert into persona_idioma values(4,1);
+insert into persona_idioma values(4,2);
+insert into persona_idioma values(4,3);
+insert into persona_idioma values(4,4);
+insert into persona_idioma values(4,5);
+insert into persona_idioma values(4,6);
+insert into persona_idioma values(4,7);
+insert into persona_idioma values(4,8);
+insert into persona_idioma values(4,9);
+insert into persona_idioma values(2,10);
+insert into persona_idioma values(2,11);
+insert into persona_idioma values(2,12);
+insert into persona_idioma values(2,13);
+insert into persona_idioma values(2,14);
+insert into persona_idioma values(2,15);
+insert into persona_idioma values(2,16);
+insert into persona_idioma values(2,17);
+insert into persona_idioma values(2,18);
+insert into persona_idioma values(2,19);
+insert into persona_idioma values(2,20);
+insert into persona_idioma values(7,40);
+insert into persona_idioma values(7,41);
+insert into persona_idioma values(7,42);
+insert into persona_idioma values(7,43);
+insert into persona_idioma values(7,44);
+insert into persona_idioma values(7,45);
+insert into persona_idioma values(7,46);
+insert into persona_idioma values(7,47);
+
+
+/*  No incluir en la carga inicia l*/
+
+insert into personas values (1,'Cristina','Martinez');
+insert into persona_idioma values(4,8);
+insert into persona_idioma values(10,8);
+insert into personas values (101,'Cristina');
+
+insert into personas (id_persona, nombre, apellido) values (101,'Cristina','Martinez');
+select * from personas where id_persona = 101;
+delete from personas where id_persona = 101;
+insert into personas (id_persona, apellido, nombre) values (101,'Martinez', 'Cristina');
+select * from personas where id_persona = 101;
+delete from personas where id_persona = 101;
+insert into personas values (101,'Martinez','Cristina');
+select * from personas where id_persona = 101;
+
+delete from idiomas where id_idioma = 7
+
+update idiomas set id_idioma = 8 where id_idioma = 7;
+select * from idiomas
+
+select distinct id_idioma from persona_idioma;
+
+Select a. apellido, a.nombre, i.nombreidioma  
+              from  personas a, idiomas i, persona_idioma  pi
+
+
+Select a. apellido, a.nombre, i.nombreidioma  
+              from  personas a, idiomas i, persona_idioma  pi
+                  where
+                     a.id_persona = pi.id_persona and
+                     i.id_idioma = pi.id_idioma   
+                     
+select COUNT(*) from persona_idioma      
